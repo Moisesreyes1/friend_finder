@@ -144,8 +144,9 @@
         <br>
         <br>
 
-        <a href="modal"><button type="submit" class="btn btn-primary btn-lg btn-block" id="submit">
-            Submit</button></a>
+        <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit">
+            Submit
+        </button>
         
         <hr>
 
@@ -156,7 +157,7 @@
         </footer>
     </div>
 
-    <div class="modal" tabindex="-1" role="dialog">
+    <div class="modal" id="matchModal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -166,9 +167,10 @@
                   </button>
                 </div>
                 <div class="modal-body">
+                    <h6 id="matchName"></h6>
                     ​<picture>
                         <source srcset="..." type="image/svg+xml">
-                        <img src="..." class="img-fluid img-thumbnail" alt="...">
+                        <img id="mathPhoto" src="..." class="img-fluid img-thumbnail" alt="...">
                     </picture>
                 </div>
                 <div class="modal-footer">
@@ -178,6 +180,40 @@
             </div>
           </div>
 
+    <!-- Javascript for moda -->
+    <script type="text/javascript">
+        // On click action to render modal
+        $("#submit").on("click", function() {
+            // Create new object with user's input
+            var userInput = {
+                name: $("#survey-name").val().trim(),
+                photo: $("#survey-photo").value().trim(),
+                score: [
+                $("#q1").val(),
+                $("#q2").val(),
+                $("#q3").val(),
+                $("#q4").val(),
+                $("#q5").val(),
+                $("#q6").val(),
+                $("#q7").val(),
+                $("#q8").val(),
+                $("#q9").val(),
+                $("#q10").val()
+                ]
+            };
+
+            // Create variable to grab the current URL and redirect browser to new page
+            var newData = window.location.assign();
+
+            // Post new data in friend's array
+            $.post(newData + "/api/friends", userInput, function(data) {
+                $("#matchName").text(data.survey-name);
+                $("#mathPhoto").attr("src", data.survey-photo);
+                $("#matchModal").modal("toggle");
+            });
+        });
+
+    </script>
     
 </body>
 </html>
