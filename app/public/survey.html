@@ -5,7 +5,7 @@
         <title>Survey</title>
         <!-- Bootstrap -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     </head>
@@ -166,7 +166,7 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="body">
                     <h6 id="matchName"></h6>
                     ​<picture>
                         <source srcset="..." type="image/svg+xml">
@@ -182,12 +182,14 @@
 
     <!-- Javascript for moda -->
     <script type="text/javascript">
-        // On click action to render modal
+
+       $(function() {
+         // On click action to render modal
         $("#submit").on("click", function() {
             // Create new object with user's input
             var userInput = {
                 name: $("#survey-name").val().trim(),
-                photo: $("#survey-photo").value().trim(),
+                photo: $("#survey-photo").val().trim(),
                 score: [
                 $("#q1").val(),
                 $("#q2").val(),
@@ -203,15 +205,16 @@
             };
 
             // Create variable to grab the current URL and redirect browser to new page
-            var newData = window.location.assign();
+            
 
             // Post new data in friend's array
-            $.post(newData + "/api/friends", userInput, function(data) {
-                $("#matchName").text(data.survey-name);
-                $("#mathPhoto").attr("src", data.survey-photo);
+            $.post("/api/friends", userInput, function(data) {
+                $("#matchName").text(data.name);
+                $("#mathPhoto").attr("src", data.photo);
                 $("#matchModal").modal("toggle");
             });
         });
+       })
 
     </script>
     
