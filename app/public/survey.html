@@ -16,9 +16,9 @@
         <hr>
         <h2><strong>About You</strong></h2>
         <h3>Name (Required)</h3>
-        <input type="text" class="form-control" id="survey-name" required placeholder="Name">
+        <input type="text" class="form-control" id="survey_name" required placeholder="Name">
         <h3>Link to Photo Image (Required)</h3>
-        <input type="text" class="form-control" id="survey-photo" required placeholder="Picture Link Here">
+        <input type="text" class="form-control" id="survey_photo" required placeholder="Picture Link Here">
 
         <hr>
         <hr>
@@ -168,10 +168,7 @@
                 </div>
                 <div class="modal-body" id="body">
                     <h6 id="matchName"></h6>
-                    ​<picture>
-                        <source srcset="..." type="image/svg+xml">
-                        <img id="mathPhoto" src="..." class="img-fluid img-thumbnail" alt="...">
-                    </picture>
+                        <img id="matchPhoto" src="/app/data/friends" class="img-fluid img-thumbnail" alt="image">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -188,8 +185,8 @@
         $("#submit").on("click", function() {
             // Create new object with user's input
             var userInput = {
-                name: $("#survey-name").val().trim(),
-                photo: $("#survey-photo").val().trim(),
+                name: $("#survey_name").val().trim(),
+                photo: $("#survey_photo").val().trim(),
                 score: [
                 $("#q1").val(),
                 $("#q2").val(),
@@ -208,9 +205,9 @@
             
 
             // Post new data in friend's array
-            $.post("/api/friends", userInput, function(data) {
+            $.post("/api/friends", function(data) {
                 $("#matchName").text(data.name);
-                $("#mathPhoto").attr("src", data.photo);
+                $("#matchPhoto").attr("src", data.photo);
                 $("#matchModal").modal("toggle");
             });
         });
