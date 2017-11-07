@@ -5,7 +5,7 @@
         <title>Survey</title>
         <!-- Bootstrap -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     </head>
@@ -16,9 +16,9 @@
         <hr>
         <h2><strong>About You</strong></h2>
         <h3>Name (Required)</h3>
-        <input type="text" class="form-control" id="survey-name" required placeholder="Name">
+        <input type="text" class="form-control" id="survey_name" required placeholder="Name">
         <h3>Link to Photo Image (Required)</h3>
-        <input type="text" class="form-control" id="survey-photo" required placeholder="Picture Link Here">
+        <input type="text" class="form-control" id="survey_photo" required placeholder="Picture Link Here">
 
         <hr>
         <hr>
@@ -166,12 +166,9 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="body">
                     <h6 id="matchName"></h6>
-                    ​<picture>
-                        <source srcset="..." type="image/svg+xml">
-                        <img id="mathPhoto" src="..." class="img-fluid img-thumbnail" alt="...">
-                    </picture>
+                        <img id="matchPhoto" src="/app/data/friends" class="img-fluid img-thumbnail" alt="image">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -182,12 +179,14 @@
 
     <!-- Javascript for moda -->
     <script type="text/javascript">
-        // On click action to render modal
+
+       $(function() {
+         // On click action to render modal
         $("#submit").on("click", function() {
             // Create new object with user's input
             var userInput = {
-                name: $("#survey-name").val().trim(),
-                photo: $("#survey-photo").value().trim(),
+                name: $("#survey_name").val().trim(),
+                photo: $("#survey_photo").val().trim(),
                 score: [
                 $("#q1").val(),
                 $("#q2").val(),
@@ -203,15 +202,16 @@
             };
 
             // Create variable to grab the current URL and redirect browser to new page
-            var newData = window.location.assign();
+            
 
             // Post new data in friend's array
-            $.post(newData + "/api/friends", userInput, function(data) {
-                $("#matchName").text(data.survey-name);
-                $("#mathPhoto").attr("src", data.survey-photo);
+            $.post("/api/friends", function(data) {
+                $("#matchName").text(data.name);
+                $("#matchPhoto").attr("src", data.photo);
                 $("#matchModal").modal("toggle");
             });
         });
+       })
 
     </script>
     
