@@ -168,7 +168,7 @@
                 </div>
                 <div class="modal-body" id="body">
                     <h6 id="matchName"></h6>
-                        <img id="matchPhoto" src="/app/data/friends" class="img-fluid img-thumbnail" alt="image">
+                        <img id="matchPhoto" src="" class="img-fluid img-thumbnail" alt="image">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -205,10 +205,11 @@
             
 
             // Post new data in friend's array
-            $.post("/api/friends", function(data) {
+            $.post("/api/friends", userInput, function(data) {
                 $("#matchName").text(data.name);
                 $("#matchPhoto").attr("src", data.photo);
                 $("#matchModal").modal("toggle");
+                console.log(data);
             });
         });
        })

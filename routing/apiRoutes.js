@@ -14,25 +14,32 @@ module.exports = function(app) {
         var results = {
             name: "",
             photo: "",
-            points: 0
+            points: 100
         };
         // Variable to hold user's survey answers
         var userAnswer = req.body;
-        var userScore = userAnswer.scores;
-        var totalScore = 0;
+        var userScore = userAnswer.score;
+        // console.log (userAnswer);
+        // Looop thru existing friends
+        for (j = 0; j < friends.length; j++) {
 
-        // Loop thru the scores of friend's array
-        for (i = 0; i < friends.scores; i++) {
-            totalScore += Math.abs(parseInt(userScore[i]) - parseInt(friends[i].scores));
-            
-            // If statement to compare scores
+        
+            var totalScore = 0;
+
+            // Loop thru the scores of friend's array
+            for (i = 0; i < friends[j].score.length; i++) {
+                totalScore += Math.abs(parseInt(userScore[i]) - parseInt(friends[j].score[i]));
+                
+               
+            }
+             // If statement to compare scores
             if (totalScore <= results.points) {
-                results.name = friends.name;
-                results.photo = friends.photo;
+                results.name = friends[j].name;
+                results.photo = friends[j].photo;
                 results.points = totalScore;
+                console.log(results);
             }
         }
-
         // Push user answers
         friends.push(userAnswer);
 
