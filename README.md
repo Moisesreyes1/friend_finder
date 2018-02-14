@@ -1,3 +1,5 @@
+To see application (Deployed in Heroku) go to: https://blooming-sierra-75596.herokuapp.com/
+
 # friend_finder
 
 Description:  User will be match with another user based on the results of both user's survey.  The closest total score will dictate match.
